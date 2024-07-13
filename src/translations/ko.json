@@ -1,0 +1,14 @@
+{
+  "Undo": "취소",
+  "Redo": "다시",
+  "Favorite": "좋아하는",
+  "Delete page": "페이지 삭제",
+  "Open file in default app": "기본 앱에서 파일 열기",
+  "Open the directory (folder)": "디렉토리(폴더)를 엽니다.",
+  "Do you want to delete this page?": "이 페이지를 삭제하시겠습니까?",
+  "The page has been removed.": "페이지가 삭제되었습니다.",
+  "Canceled": "취소",
+  "This page cannot be deleted.": "이 페이지는 삭제할 수 없습니다.",
+  "Delete from the favorites list": "즐겨찾기 목록에서 삭제",
+  "Add to the favorites list": "즐겨찾기 목록에 추가"
+}

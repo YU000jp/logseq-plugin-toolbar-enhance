@@ -1,0 +1,14 @@
+{
+  "Undo": "Odčiniť",
+  "Redo": "Znova",
+  "Favorite": "Obľúbený",
+  "Delete page": "Odstrániť stránku",
+  "Open file in default app": "Otvorte súbor v predvolenej aplikácii",
+  "Open the directory (folder)": "Otvorte adresár (priečinok)",
+  "Do you want to delete this page?": "Chcete túto stránku zmazať?",
+  "The page has been removed.": "Stránka bola odstránená.",
+  "Canceled": "Zrušené",
+  "This page cannot be deleted.": "Túto stránku nie je možné odstrániť.",
+  "Delete from the favorites list": "Odstrániť zo zoznamu obľúbených položiek",
+  "Add to the favorites list": "Pridať do zoznamu obľúbených položiek"
+}

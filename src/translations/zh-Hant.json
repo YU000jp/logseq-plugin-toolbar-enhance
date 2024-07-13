@@ -1,0 +1,14 @@
+{
+  "Undo": "恢復",
+  "Redo": "重做",
+  "Favorite": "喜歡",
+  "Delete page": "刪除頁面",
+  "Open file in default app": "在預設應用程式中打開檔",
+  "Open the directory (folder)": "開啟目錄（資料夾）",
+  "Do you want to delete this page?": "是否要刪除此頁面？",
+  "The page has been removed.": "該頁面已被刪除。",
+  "Canceled": "取消",
+  "This page cannot be deleted.": "此頁面無法刪除。",
+  "Delete from the favorites list": "從我的最愛清單中刪除",
+  "Add to the favorites list": "添加到我的最愛清單"
+}

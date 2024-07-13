@@ -1,0 +1,14 @@
+{
+  "Undo": "Скасувати",
+  "Redo": "Повторити",
+  "Favorite": "Улюблений",
+  "Delete page": "Видалити сторінку",
+  "Open file in default app": "Відкрити файл у програмі за замовчуванням",
+  "Open the directory (folder)": "Відкриваємо каталог (папку)",
+  "Do you want to delete this page?": "Бажаєте видалити цю сторінку?",
+  "The page has been removed.": "Сторінку видалено.",
+  "Canceled": "Скасовано",
+  "This page cannot be deleted.": "Ця сторінка не може бути видалена.",
+  "Delete from the favorites list": "Видалити зі списку обраних",
+  "Add to the favorites list": "Додати до списку обраного"
+}

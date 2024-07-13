@@ -1,0 +1,14 @@
+{
+  "Undo": "撤消",
+  "Redo": "重做",
+  "Favorite": "喜欢",
+  "Delete page": "删除页面",
+  "Open file in default app": "在默认应用程序中打开文件",
+  "Open the directory (folder)": "打开目录（文件夹）",
+  "Do you want to delete this page?": "是否要删除此页面？",
+  "The page has been removed.": "该页面已被删除。",
+  "Canceled": "取消",
+  "This page cannot be deleted.": "此页面无法删除。",
+  "Delete from the favorites list": "从收藏夹列表中删除",
+  "Add to the favorites list": "添加到收藏夹列表"
+}

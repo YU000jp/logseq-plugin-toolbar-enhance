@@ -1,0 +1,14 @@
+{
+  "Undo": "操作を元に戻す",
+  "Redo": "操作をやり直す",
+  "Favorite": "お気に入り",
+  "Delete page": "ページを削除",
+  "Open file in default app": "デフォルトアプリで、ファイルを開く",
+  "Open the directory (folder)": "ディレクトリ（フォルダ）を開く",
+  "Do you want to delete this page?": "このページを削除しますか？",
+  "The page has been removed.": "ページが削除されました。",
+  "Canceled": "キャンセルされました",
+  "This page cannot be deleted.": "このページは削除できません。",
+  "Delete from the favorites list": "お気に入りリストから削除",
+  "Add to the favorites list": "お気に入りリストに追加"
+}

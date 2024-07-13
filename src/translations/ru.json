@@ -1,0 +1,14 @@
+{
+  "Undo": "Отменить",
+  "Redo": "Повторить",
+  "Favorite": "Любимый",
+  "Delete page": "Удалить страницу",
+  "Open file in default app": "Открыть файл в стандартном приложении",
+  "Open the directory (folder)": "Откройте каталог (папку)",
+  "Do you want to delete this page?": "Вы хотите удалить эту страницу?",
+  "The page has been removed.": "Страница была удалена.",
+  "Canceled": "Аннулированный",
+  "This page cannot be deleted.": "Эта страница не может быть удалена.",
+  "Delete from the favorites list": "Удалить из списка избранного",
+  "Add to the favorites list": "Добавить в избранное"
+}

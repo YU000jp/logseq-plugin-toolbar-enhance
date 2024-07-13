@@ -1,0 +1,14 @@
+{
+  "Undo": "Geri almak",
+  "Redo": "Yinele",
+  "Favorite": "Gözde",
+  "Delete page": "Sayfayı sil",
+  "Open file in default app": "Dosyayı varsayılan uygulamada aç",
+  "Open the directory (folder)": "Dizini (klasörü) açın",
+  "Do you want to delete this page?": "Bu sayfayı silmek istiyor musunuz?",
+  "The page has been removed.": "Sayfa kaldırıldı.",
+  "Canceled": "İptal edilmiş",
+  "This page cannot be deleted.": "Bu sayfa silinemez.",
+  "Delete from the favorites list": "Sık kullanılanlar listesinden sil",
+  "Add to the favorites list": "Favoriler listesine ekle"
+}

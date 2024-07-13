@@ -1,0 +1,14 @@
+{
+  "Undo": "Défaire",
+  "Redo": "Refaire",
+  "Favorite": "Favori",
+  "Delete page": "Supprimer la page",
+  "Open file in default app": "Ouvrir le fichier dans l’application par défaut",
+  "Open the directory (folder)": "Ouvrir le répertoire (dossier)",
+  "Do you want to delete this page?": "Voulez-vous supprimer cette page ?",
+  "The page has been removed.": "La page a été supprimée.",
+  "Canceled": "Annulé",
+  "This page cannot be deleted.": "Cette page ne peut pas être supprimée.",
+  "Delete from the favorites list": "Supprimer de la liste des favoris",
+  "Add to the favorites list": "Ajouter à la liste des favoris"
+}
