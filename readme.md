@@ -15,22 +15,26 @@
 
 ## Overview
 
-- Add function buttons to the toolbar
-  1. Favorite button
-  1. Delete-page button
-  1. Undo/Redo button
-  1. "Open file in default app" button
-  1. "Open the directory (folder)" button
+- For quick operation, *add function buttons to the toolbar*
+  > ![image](https://github.com/user-attachments/assets/534b4af4-1960-491a-9bc5-9ac120c95c30)
+  1. **Favorite button** ⭐
+  1. Delete-page button 🗑️
+  1. Undo/Redo button ↩️ ↪️
+  1. "Open file in default app" button 📱
+  1. "Open the directory (folder)" button 📁
 
 ---
 
 ## Getting Started
 
-### Install from Logseq Marketplace (Coming👷🚧)
+### ~~Install from Logseq Marketplace (Coming👷🚧)~~
 
-- Press [`---`] on the top right toolbar to open [`Plugins`]. Select marketplace. Type `Toolbar` in the search field, select it from the search results and install
+- ~~Press [`---`] on the top right toolbar to open [`Plugins`]. Select marketplace. Type `Toolbar` in the search field, select it from the search results and install~~
 
 ### Usage
+
+- Even if the plug-in is enabled, the buttons on the toolbar are switched off by default by the Logseq core. Press the ![image](https://github.com/user-attachments/assets/103b9a3f-8c25-4e42-903d-c05c71c349db) button on the toolbar to set it to be visible. The user can choose which buttons to display.
+- Note: Except for the Undo/Redo button, the icons disappear when no page is open.
 
 ---
 
