@@ -46,7 +46,7 @@
 
 ### TODO
 
-1. [ ] Homodoro timer with time lapse illustrated
+1. [ ] Homodoro timer with time lapse illustrated (Sample: https://yutori-lab.com/jikkan-timer/)
 
 ## Prior art & Credit
 
