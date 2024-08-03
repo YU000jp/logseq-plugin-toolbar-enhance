@@ -1,5 +1,5 @@
 import '@logseq/libs' //https://plugins-doc.logseq.com/
-import { PageEntity } from '@logseq/libs/dist/LSPlugin.user'
+import { BlockEntity, PageEntity } from '@logseq/libs/dist/LSPlugin.user'
 import { setup as l10nSetup, t } from "logseq-l10n" //https://github.com/sethyuan/logseq-l10n
 import { confirmDialog, removeProvideStyle } from './lib'
 import { settingsTemplate } from './settings'
@@ -104,16 +104,33 @@ const main = async () => {
     // ページをチェックするたびに、以前のスタイルを削除する
     removeProvideStyle(keyFavCss)
 
-    if (template !== "/page/:name") //ページ以外は除外
-      return
     //console.log("onRouteChanged", path, template)
 
-    // pathの値に「%2F」が含まれていたら「/」に変換する。先頭の/page/を削除する
-    const pagePath = decodeURIComponent(path).replace(/^\/page\//, "")
-    //console.log("pagePath", pagePath)
+    if (template !== "/page/:name") //ページ以外は除外
+      return
 
-    if (pagePath)
-      provideStyleForFavOnly(pagePath) // お気に入りに含まれている場合のみスタイルを適用
+    // div.breadcrumbs.block-parentが存在したら、ズームインしているページなので、親ページを取得する
+    const parentPage = parent.document.querySelector("div.breadcrumb.block-parents") as HTMLElement | null
+    //console.log("parentPage", parentPage)
+    if (parentPage) { // ブロックズームの場合
+      //console.log("block zoom")
+      // ページ名を取得
+      //pathの先頭の/page/を削除する
+      const blockUuid = path.replace(/^\/page\//, "") // ページ名ではなくuuid
+      const blockEntity = await logseq.Editor.getBlock(blockUuid) as { page: BlockEntity["page"] } | null
+      if (blockEntity) {
+        const pageEntity = await logseq.Editor.getPage(blockEntity.page.id) as { name: PageEntity["name"] } | null
+        //console.log("blockEntity", blockEntity, pageEntity)
+        if (pageEntity)
+          provideStyleForFavOnly(pageEntity.name) // お気に入りに含まれている場合のみスタイルを適用
+      }
+    } else {// ブロックズーム以外の場合
+      // pathの値に「%2F」が含まれていたら「/」に変換する。先頭の/page/を削除する
+      const pagePath = decodeURIComponent(path).replace(/^\/page\//, "")
+      //console.log("pagePath", pagePath)
+      if (pagePath)
+        provideStyleForFavOnly(pagePath) // お気に入りに含まれている場合のみスタイルを適用
+    }
   })
 
 
