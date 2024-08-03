@@ -46,7 +46,7 @@
 
 > Go to the [Discussions](https://github.com/YU000jp/logseq-plugin-toolbar-enhance/discussions) tab to ask and find this kind of things.
 1. This plugin still has room for improvement. Please let me know if you encounter any issues or have any ideas for enhancement.
-1. This plugin relies on Logseq's DOM (Document Object Model) structure. If the DOM structure changes due to a Logseq version update, styles may not be applied. We will adjust the CSS to deal with it. If you notice something, please raise an issue.
+1. This plugin relies on Logseq's DOM (Document Object Model) structure. If the DOM structure changes due to a Logseq version update, styles or features may not be applied. If you notice something, please raise an issue.
 
 ## Prior art & Credit
 
