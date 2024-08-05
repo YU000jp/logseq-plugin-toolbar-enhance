@@ -1,9 +1,5 @@
 # Logseq Plugin: Toolbar Enhance
 
-- Not published yet 👷🚧
-
-> [Release](https://github.com/YU000jp/logseq-plugin-toolbar-enhance/releases) information is on the right. Load files at developer mode.
-
 <div align="right">
 
 [![latest release version](https://img.shields.io/github/v/release/YU000jp/logseq-plugin-toolbar-enhance)](https://github.com/YU000jp/logseq-plugin-toolbar-enhance/releases)
@@ -27,9 +23,9 @@
 
 ## Getting Started
 
-### ~~Install from Logseq Marketplace (Coming👷🚧)~~
+### Install from Logseq Marketplace (Coming👷🚧)
 
-- ~~Press [`---`] on the top right toolbar to open [`Plugins`]. Select marketplace. Type `Toolbar` in the search field, select it from the search results and install~~
+- Press [`---`] on the top right toolbar to open [`Plugins`]. Select marketplace. Type `Toolbar` in the search field, select it from the search results and install
 
 ### Usage
 
