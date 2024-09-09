@@ -1,5 +1,8 @@
 # Logseq プラグイン: Toolbar Enhance
 
+> [!WARNING]
+>このプラグインはLogseq dbバージョンでは動作しません。
+
 <div align="right">
 
 [English](https://github.com/YU000jp/logseq-plugin-toolbar-enhance)|[日本語](https://github.com/YU000jp/logseq-plugin-toolbar-enhance/blob/main/readme.md) ![latest release version](https://img.shields.io/github/v/release/YU000jp/logseq-plugin-toolbar-enhance)](https://github.com/YU000jp/logseq-plugin-toolbar-enhance/releases)
