@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/YU000jp/logseq-plugin-toolbar-enhance/compare/v1.0.1...v1.1.0) (2025-06-08)
+
+
+### Features
+
+* Compatibility for DB model [#2](https://github.com/YU000jp/logseq-plugin-toolbar-enhance/issues/2) ([25500c1](https://github.com/YU000jp/logseq-plugin-toolbar-enhance/commit/25500c1df1831b90d51ea60b89a4a42ff058cb12))
+
 ## [1.0.1](https://github.com/YU000jp/logseq-plugin-toolbar-enhance/compare/v1.0.0...v1.0.1) (2024-08-03)
 
 
