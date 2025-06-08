@@ -16,11 +16,17 @@ This plugin does not work with Logseq db version.
 
 - For quick operation, *add function buttons to the toolbar*
   > ![image](https://github.com/user-attachments/assets/534b4af4-1960-491a-9bc5-9ac120c95c30)
+
+- If use Logseq File-based model
   1. **Favorite button** ⭐
   1. Delete-page button 🗑️
   1. Undo/Redo button ↩️ ↪️
   1. "Open file in default app" button 📱
   1. "Open the directory (folder)" button 📁
+
+- If use Logseq DB model
+  1. Delete-page button 🗑️
+  1. Undo/Redo button ↩️ ↪️
 
 ---
 

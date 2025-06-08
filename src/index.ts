@@ -1,5 +1,5 @@
 import '@logseq/libs' //https://plugins-doc.logseq.com/
-import { BlockEntity, PageEntity } from '@logseq/libs/dist/LSPlugin.user'
+import { AppInfo, BlockEntity, PageEntity } from '@logseq/libs/dist/LSPlugin.user'
 import { setup as l10nSetup, t } from "logseq-l10n" //https://github.com/sethyuan/logseq-l10n
 import { confirmDialog, removeProvideStyle } from './lib'
 import { settingsTemplate } from './settings'
@@ -32,8 +32,44 @@ const keyOpenFileInDefaultApp = "buttonOpenFileInDefaultApp"
 const keyOpenFileInDirectory = "buttonOpenFileInDirectory"
 
 
+let logseqVersion: string = "" //バージョンチェック用
+let logseqVersionMd: boolean = false //バージョンチェック用
+let logseqDbGraph: boolean = false
+// export const getLogseqVersion = () => logseqVersion //バージョンチェック用
+export const booleanLogseqVersionMd = () => logseqVersionMd //バージョンチェック用
+export const booleanDbGraph = () => logseqDbGraph //バージョンチェック用
+
+
 /* main */
 const main = async () => {
+  // バージョンチェック
+  logseqVersionMd = await checkLogseqVersion()
+  // console.log("logseq version: ", logseqVersion)
+  // console.log("logseq version is MD model: ", logseqVersionMd)
+  // 100ms待つ
+  await new Promise(resolve => setTimeout(resolve, 100))
+
+  // if (logseqVersionMd === false) {
+  //   // Logseq ver 0.10.*以下にしか対応していない
+  //   logseq.UI.showMsg("The ’Bullet Point Custom Icon’ plugin only supports Logseq ver 0.10.* and below.", "warning", { timeout: 5000 })
+  //   return
+  // }
+  // // DBグラフチェック
+  logseqDbGraph = await checkLogseqDbGraph()
+  if (logseqDbGraph === true) {
+    // DBグラフには対応していない
+    return showDbGraphIncompatibilityMsg()
+  }
+
+  //100ms待つ
+  await new Promise(resolve => setTimeout(resolve, 100))
+
+  logseq.App.onCurrentGraphChanged(async () => {
+    logseqDbGraph = await checkLogseqDbGraph()
+    if (logseqDbGraph === true)
+      // DBグラフには対応していない
+      return showDbGraphIncompatibilityMsg()
+  })
 
   //多言語化 L10N
   await l10nSetup({
@@ -53,7 +89,7 @@ const main = async () => {
     #${keyFavorite} {
         opacity: 0.2;
     }
-    body:not([data-page="page"]){
+    body${logseqVersionMd === true ? `:not([data-page="page"])` : ":is([data-page='Logseq'])"} {
       & #${keyFavorite},
       & #${keyDeletePage},
       & #${keyOpenFileInDefaultApp},
@@ -77,25 +113,26 @@ const main = async () => {
 
   // Delete Page & Favorite
   logseq.App.registerUIItem('toolbar', {
-    key: "FavoriteAndDelete",
+    key: logseqVersionMd === true ? "FavoriteAndDelete" : "DeletePage",
     template: `
     <div style="display: flex; justify-content: space-between;">
-    <div title="${t("Favorite")}"><button class="button icon" id="${keyFavorite}" data-on-click="${keyFavorite}" style="font-size: 16px">⭐</button></div>
+    ${logseqVersionMd === true ? `<div title="${t("Favorite")}"><button class="button icon" id="${keyFavorite}" data-on-click="${keyFavorite}" style="font-size: 16px">⭐</button></div>` : ""}
     <div title="${t("Delete page")}"><button class="button icon" id="${keyDeletePage}" data-on-click="${keyDeletePage}" style="font-size: 16px">🗑️</button></div>
     </div>
     `,
   })
 
   // Open File in Default App と Open File in Directory
-  logseq.App.registerUIItem('toolbar', {
-    key: "OpenFile",
-    template: `
+  if (logseqVersionMd === true)
+    logseq.App.registerUIItem('toolbar', {
+      key: "OpenFile",
+      template: `
     <div style="display: flex; justify-content: space-between;">
     <div title="${t("Open file in default app")}"><button class="button icon" id="${keyOpenFileInDefaultApp}" data-on-click="${keyOpenFileInDefaultApp}" style="font-size: 16px">📱</button></div>
     <div title="${t("Open the directory (folder)")}"><button class="button icon" id="${keyOpenFileInDirectory}" data-on-click="${keyOpenFileInDirectory}" style="font-size: 16px">📁</button></div>
     </div>
     `,
-  })
+    })
 
 
   // ルート変更時
@@ -222,6 +259,7 @@ const main = async () => {
 
 
 const provideStyleForFavOnly = (pagePath: string) => {
+  if (logseqVersionMd === false) return // DBモデルの場合は何もしない (非対応)
   logseq.provideStyle({
     key: keyFavCss, style: `
     body[data-page="page"]:has(li.favorite-item[title="${pagePath}"]) #${keyFavorite} {
@@ -229,6 +267,45 @@ const provideStyleForFavOnly = (pagePath: string) => {
         font-size: small;
     }
     `})
+}
+
+
+// MDモデルかどうかのチェック DBモデルはfalse
+const checkLogseqVersion = async (): Promise<boolean> => {
+  const logseqInfo = (await logseq.App.getInfo("version")) as AppInfo | any
+  //  0.11.0もしくは0.11.0-alpha+nightly.20250427のような形式なので、先頭の3つの数値(1桁、2桁、2桁)を正規表現で取得する
+  const version = logseqInfo.match(/(\d+)\.(\d+)\.(\d+)/)
+  if (version) {
+    logseqVersion = version[0] //バージョンを取得
+    // console.log("logseq version: ", logseqVersion)
+
+    // もし バージョンが0.10.*系やそれ以下ならば、logseqVersionMdをtrueにする
+    if (logseqVersion.match(/0\.([0-9]|10)\.\d+/)) {
+      logseqVersionMd = true
+      // console.log("logseq version is 0.10.* or lower")
+      return true
+    } else logseqVersionMd = false
+  } else logseqVersion = "0.0.0"
+  return false
+}
+// DBグラフかどうかのチェック
+// DBグラフかどうかのチェック DBグラフだけtrue
+const checkLogseqDbGraph = async (): Promise<boolean> => {
+  const element = parent.document.querySelector(
+    "div.block-tags",
+  ) as HTMLDivElement | null // ページ内にClassタグが存在する  WARN:: ※DOM変更の可能性に注意
+  if (element) {
+    logseqDbGraph = true
+    return true
+  } else logseqDbGraph = false
+  return false
+}
+
+const showDbGraphIncompatibilityMsg = () => {
+  setTimeout(() => {
+    logseq.UI.showMsg("The ’Toolbar Enhance’ plugin not supports Logseq DB graph.", "warning", { timeout: 5000 })
+  }, 2000)
+  return
 }
 
 
