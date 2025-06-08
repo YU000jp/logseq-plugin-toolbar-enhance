@@ -1,7 +1,7 @@
 # Logseq Plugin: Toolbar Enhance
 
-> [!WARNING]
-This plugin does not work with Logseq db version.
+> [!NOTE]
+> This plugin works with the Logseq DB model.However, it is limited.
 
 <div align="right">
 
@@ -38,7 +38,7 @@ This plugin does not work with Logseq db version.
 
 ### Usage
 
-- Even if the plug-in is enabled, the buttons on the toolbar are switched off by default by the Logseq core. Press the ![image](https://github.com/user-attachments/assets/103b9a3f-8c25-4e42-903d-c05c71c349db) button on the toolbar to set it to be visible. The user can choose which buttons to display.
+- Even if this plugin is enabled, the buttons on the toolbar are switched off by default by the Logseq core. Press the ![image](https://github.com/user-attachments/assets/103b9a3f-8c25-4e42-903d-c05c71c349db) button on the toolbar to set it to be visible. The user can choose which buttons to display.
 - Note: Except for the Undo/Redo button, the icons disappear when no page is open.
 
 ---

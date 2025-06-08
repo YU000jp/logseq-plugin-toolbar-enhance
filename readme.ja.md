@@ -1,7 +1,7 @@
 # Logseq プラグイン: Toolbar Enhance
 
-> [!WARNING]
->このプラグインはLogseq dbバージョンでは動作しません。
+> [!NOTE]
+> このプラグインはLogseq DBモデルで動作します。ただし、限定的です。
 
 <div align="right">
 
