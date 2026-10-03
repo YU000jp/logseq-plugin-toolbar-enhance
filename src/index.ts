@@ -1,5 +1,5 @@
 import '@logseq/libs' //https://plugins-doc.logseq.com/
-import { AppInfo, BlockEntity, PageEntity } from '@logseq/libs/dist/LSPlugin.user'
+import { BlockEntity, PageEntity } from '@logseq/libs/dist/LSPlugin.user'
 import { setup as l10nSetup, t } from "logseq-l10n" //https://github.com/sethyuan/logseq-l10n
 import { confirmDialog, removeProvideStyle } from './lib'
 import { settingsTemplate } from './settings'
@@ -32,30 +32,29 @@ const keyOpenFileInDefaultApp = "buttonOpenFileInDefaultApp"
 const keyOpenFileInDirectory = "buttonOpenFileInDirectory"
 
 
-let logseqVersion: string = "" //バージョンチェック用
-let logseqVersionMd: boolean = false //バージョンチェック用
-let logseqDbGraph: boolean = false
+let logseqVersion: string = "" //アプリバージョン
+let logseqVersionMd: boolean = false //現在のグラフがファイルベースかどうか(!DBグラフ)
+let logseqDbGraph: boolean = false //現在のグラフがDBグラフかどうか
+let logseqDbEraApp: boolean = false //DB系世代(新UI)アプリかどうか。グラフ種別とは別物
 // export const getLogseqVersion = () => logseqVersion //バージョンチェック用
-export const booleanLogseqVersionMd = () => logseqVersionMd //バージョンチェック用
-export const booleanDbGraph = () => logseqDbGraph //バージョンチェック用
+export const booleanLogseqVersionMd = () => logseqVersionMd //ファイルグラフかどうか
+export const booleanDbGraph = () => logseqDbGraph //DBグラフかどうか
 
 
 /* main */
 const main = async () => {
-  // バージョンチェック
-  logseqVersionMd = await checkLogseqVersion()
+  // アプリ情報チェック(バージョン解析のみ。グラフ種別の判定には使わない)
+  const appInfo = await fetchAppInfo()
+  logseqVersion = appInfo.version
+  logseqDbEraApp = appInfo.isDbEra
   // console.log("logseq version: ", logseqVersion)
-  // console.log("logseq version is MD model: ", logseqVersionMd)
+
   // 100ms待つ
   await new Promise(resolve => setTimeout(resolve, 100))
 
-  // if (logseqVersionMd === false) {
-  //   // Logseq ver 0.10.*以下にしか対応していない
-  //   logseq.UI.showMsg("The ’Bullet Point Custom Icon’ plugin only supports Logseq ver 0.10.* and below.", "warning", { timeout: 5000 })
-  //   return
-  // }
-  // // DBグラフチェック
+  // DBグラフチェック(公式API)
   logseqDbGraph = await checkLogseqDbGraph()
+  logseqVersionMd = !logseqDbGraph
   if (logseqDbGraph === true) {
     // DBグラフには対応していない
     return showDbGraphIncompatibilityMsg()
@@ -66,6 +65,7 @@ const main = async () => {
 
   logseq.App.onCurrentGraphChanged(async () => {
     logseqDbGraph = await checkLogseqDbGraph()
+    logseqVersionMd = !logseqDbGraph
     if (logseqDbGraph === true)
       // DBグラフには対応していない
       return showDbGraphIncompatibilityMsg()
@@ -89,7 +89,7 @@ const main = async () => {
     #${keyFavorite} {
         opacity: 0.2;
     }
-    body${logseqVersionMd === true ? `:not([data-page="page"])` : ":is([data-page='Logseq'])"} {
+    body${logseqDbEraApp === false ? `:not([data-page="page"])` : ":is([data-page='Logseq'])"} {
       & #${keyFavorite},
       & #${keyDeletePage},
       & #${keyOpenFileInDefaultApp},
@@ -259,7 +259,7 @@ const main = async () => {
 
 
 const provideStyleForFavOnly = (pagePath: string) => {
-  if (logseqVersionMd === false) return // DBモデルの場合は何もしない (非対応)
+  if (logseqVersionMd === false) return // DBグラフの場合は何もしない (非対応)
   logseq.provideStyle({
     key: keyFavCss, style: `
     body[data-page="page"]:has(li.favorite-item[title="${pagePath}"]) #${keyFavorite} {
@@ -270,40 +270,31 @@ const provideStyleForFavOnly = (pagePath: string) => {
 }
 
 
-// MDモデルかどうかのチェック DBモデルはfalse
-const checkLogseqVersion = async (): Promise<boolean> => {
-  const logseqInfo = (await logseq.App.getInfo("version")) as AppInfo | any
+// アプリのバージョンと世代を取得(バージョン解析のみ。グラフ種別の判定には使わない)
+const fetchAppInfo = async (): Promise<{ version: string; isDbEra: boolean }> => {
+  const raw = await logseq.App.getInfo("version")
+  const version = typeof raw === "string" ? raw : "0.0.0"
   //  0.11.0もしくは0.11.0-alpha+nightly.20250427のような形式なので、先頭の3つの数値(1桁、2桁、2桁)を正規表現で取得する
-  const version = logseqInfo.match(/(\d+)\.(\d+)\.(\d+)/)
-  if (version) {
-    logseqVersion = version[0] //バージョンを取得
-    // console.log("logseq version: ", logseqVersion)
-
-    // もし バージョンが0.10.*系やそれ以下ならば、logseqVersionMdをtrueにする
-    if (logseqVersion.match(/0\.([0-9]|10)\.\d+/)) {
-      logseqVersionMd = true
-      // console.log("logseq version is 0.10.* or lower")
-      return true
-    } else logseqVersionMd = false
-  } else logseqVersion = "0.0.0"
-  return false
+  const m = version.match(/(\d+)\.(\d+)\.(\d+)/)
+  // 0.11.x以降と2.x以降がDB系世代(新UI)。1.x(OG)は旧UI系統
+  const isDbEra = m ? (Number(m[1]) >= 2 || (Number(m[1]) === 0 && Number(m[2]) >= 11)) : false
+  return { version: m ? m[0] : version, isDbEra }
 }
-// DBグラフかどうかのチェック
+
 // DBグラフかどうかのチェック DBグラフだけtrue
+// 公式APIを使用。0.10.x以前のホストには未実装でrejectする → false
 const checkLogseqDbGraph = async (): Promise<boolean> => {
-  const element = parent.document.querySelector(
-    "div.block-tags",
-  ) as HTMLDivElement | null // ページ内にClassタグが存在する  WARN:: ※DOM変更の可能性に注意
-  if (element) {
-    logseqDbGraph = true
-    return true
-  } else logseqDbGraph = false
-  return false
+  try {
+    const value = await (logseq.App as any).checkCurrentIsDbGraph()
+    return typeof value === "boolean" ? value : false
+  } catch {
+    return false // API非搭載ホスト = DBグラフを開けない旧アプリ
+  }
 }
 
 const showDbGraphIncompatibilityMsg = () => {
   setTimeout(() => {
-    logseq.UI.showMsg("The ’Toolbar Enhance’ plugin not supports Logseq DB graph.", "warning", { timeout: 5000 })
+    logseq.UI.showMsg("The ’Toolbar Enhance’ plugin does not support Logseq DB graph.", "warning", { timeout: 5000 })
   }, 2000)
   return
 }
