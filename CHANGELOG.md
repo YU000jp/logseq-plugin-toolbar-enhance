@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/YU000jp/logseq-plugin-toolbar-enhance/compare/v1.1.0...v1.1.1) (2026-10-03)
+
+
+### Bug Fixes
+
+* DBグラフ判定を公式APIに置き換え、グラフ種別とアプリ世代を分離 ([baa5ac3](https://github.com/YU000jp/logseq-plugin-toolbar-enhance/commit/baa5ac36a380d84b7f064dacb6f9e41eee46b686))
+
 # [1.1.0](https://github.com/YU000jp/logseq-plugin-toolbar-enhance/compare/v1.0.1...v1.1.0) (2025-06-08)
 
 
